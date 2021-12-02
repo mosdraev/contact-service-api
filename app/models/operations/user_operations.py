@@ -54,7 +54,7 @@ class UserOperations:
         return data
 
     def verify_user_email(self, token):
-        token_data = UserOperations.verify_user_request(token, EMAIL_TOKEN_SECRET_KEY)
+        token_data = UserOperations.verify_token(token, EMAIL_TOKEN_SECRET_KEY)
 
         user = self.get_user_by_email(email=token_data.email)
         if user is None:

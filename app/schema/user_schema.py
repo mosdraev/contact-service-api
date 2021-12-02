@@ -26,6 +26,9 @@ class UserContacts(BaseModel):
 class UserRegister(UserData):
     password: str
 
+class UserIDToken(BaseModel):
+    id: Optional[int] = None
+
 class UserEmailToken(BaseModel):
     email: Optional[EmailStr] = None
 

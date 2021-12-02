@@ -9,8 +9,8 @@ class ContactOperations:
         contacts = self.db.query(Contact).filter(Contact.owner_id == owner_id).all()
         return { "contacts": contacts }
 
-    def get_contact(self, contact_id):
-        contact = self.db.query(Contact).filter(Contact.id == contact_id).first()
+    def get_contact(self, owner_id, contact_id):
+        contact = self.db.query(Contact).filter(Contact.id == contact_id, Contact.owner_id == owner_id).first()
         return contact
 
     def create_contact(self, data, owner_id):
@@ -23,8 +23,8 @@ class ContactOperations:
 
         return new_contact
 
-    def update_contact(self, data, contact_id):
-        find_contact = self.db.query(Contact).filter(Contact.id == contact_id)
+    def update_contact(self, data, contact_id, owner_id):
+        find_contact = self.db.query(Contact).filter(Contact.id == contact_id, Contact.owner_id == owner_id)
 
         if find_contact.first():
             data = ContactOperations.remove_none_values(data.dict())
@@ -34,8 +34,8 @@ class ContactOperations:
             return find_contact.first()
         return False
 
-    def delete_contact(self, contact_id):
-        contact = self.get_contact(contact_id)
+    def delete_contact(self, contact_id, owner_id):
+        contact = self.get_contact(contact_id, owner_id)
         if contact:
             self.db.delete(contact)
             self.db.commit()

@@ -39,10 +39,10 @@ def get_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Sessi
     return status_result
 
 # Get a user by id
-@router.get("/{id}", response_model = UserData)
-def get_user(id: int, db: Session = Depends(db), current_user: str = Depends(OAuth2.verify_user_request)):
+@router.get("/", response_model = UserData)
+def get_user(db: Session = Depends(db), current_user: int = Depends(OAuth2.verify_user_request)):
     operation = UserOperations(db)
-    status = operation.get_user(id)
+    status = operation.get_user(current_user.id)
 
     if not status:
         raise Exception.resource_not_found("User does not exists.")

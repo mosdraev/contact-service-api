@@ -1,7 +1,10 @@
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
+
 from pydantic import BaseModel
 from pydantic.networks import EmailStr
+
+from ..schema.contact_schema import ContactData
 
 
 class UserData(BaseModel):
@@ -10,6 +13,12 @@ class UserData(BaseModel):
     email_verified_at: Optional[datetime] = None
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
+
+    class Config:
+        orm_mode = True
+
+class UserContacts(BaseModel):
+    contacts: List[ContactData] = []
 
     class Config:
         orm_mode = True

@@ -14,8 +14,8 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Model = declarative_base()
 
 def db():
-    db = SessionLocal()
+    _db = SessionLocal()
     try:
-        yield db
+        yield _db
     finally:
-        db.close()
+        _db.close()

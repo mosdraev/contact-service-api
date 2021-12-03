@@ -17,20 +17,25 @@ class UserData(BaseModel):
     class Config:
         orm_mode = True
 
+
 class UserContacts(BaseModel):
     contacts: List[ContactData] = []
 
     class Config:
         orm_mode = True
 
+
 class UserRegister(UserData):
     password: str
+
 
 class UserIDToken(BaseModel):
     id: Optional[int] = None
 
+
 class UserEmailToken(BaseModel):
     email: Optional[EmailStr] = None
+
 
 class UserToken(BaseModel):
     access_token: str

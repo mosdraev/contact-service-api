@@ -5,6 +5,7 @@ from sqlalchemy.sql.sqltypes import TIMESTAMP, BigInteger
 
 from ..config.database import Model
 
+
 class Profile(Model):
     __tablename__ = "profiles"
 

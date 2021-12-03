@@ -13,6 +13,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Model = declarative_base()
 
+
 def db():
     _db = SessionLocal()
     try:

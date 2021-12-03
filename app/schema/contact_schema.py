@@ -9,10 +9,12 @@ class ContactBase(BaseModel):
     id: Optional[int] = None
     owner_id: Optional[int] = None
 
+
 class ContactForm(ContactBase):
     email: EmailStr
     firstname: str
     lastname: str
+
 
 class ContactData(ContactForm):
     created_at: Optional[datetime] = None
@@ -20,6 +22,7 @@ class ContactData(ContactForm):
 
     class Config:
         orm_mode = True
+
 
 class Contacts(BaseModel):
     contacts: List[ContactData] = []

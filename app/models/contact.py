@@ -19,6 +19,5 @@ class Contact(Model):
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
     updated_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
 
-
     owner = relationship('User', back_populates='contacts')
     UniqueConstraint(email)

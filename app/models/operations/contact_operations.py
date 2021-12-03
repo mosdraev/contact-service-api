@@ -7,7 +7,7 @@ class ContactOperations:
 
     def get_contacts(self, owner_id):
         contacts = self.db.query(Contact).filter(Contact.owner_id == owner_id).all()
-        return { "contacts": contacts }
+        return {"contacts": contacts}
 
     def get_contact(self, owner_id, contact_id):
         contact = self.db.query(Contact).filter(Contact.id == contact_id, Contact.owner_id == owner_id).first()
@@ -35,7 +35,7 @@ class ContactOperations:
         return False
 
     def delete_contact(self, contact_id, owner_id):
-        contact = self.get_contact(contact_id, owner_id)
+        contact = self.get_contact(owner_id, contact_id)
         if contact:
             self.db.delete(contact)
             self.db.commit()
@@ -46,6 +46,6 @@ class ContactOperations:
     @classmethod
     def remove_none_values(cls, dictionary_data):
         for item in list(dictionary_data):
-            if dictionary_data[item] == None:
+            if dictionary_data[item] is None:
                 dictionary_data.pop(item)
         return dictionary_data

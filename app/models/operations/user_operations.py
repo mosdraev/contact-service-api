@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from passlib.context import CryptContext
 
 from ...models.user import User
-from ...routers.exception import Exception
+from ...routers.app_exception import AppException
 from ..operations.oauth2 import (ACCESS_TOKEN_EXPIRE_MINUTES,
                                  EMAIL_TOKEN_SECRET_KEY, OAuth2)
 
@@ -46,12 +46,12 @@ class UserOperations:
 
         user = self.get_user_by_email(email=token_data.email)
         if user is None:
-            raise Exception.unauthorized_access()
+            raise AppException.unauthorized_access()
         else:
             if user.email_verification_token == token:
                 self.activate_user(user)
             else:
-                raise Exception.unauthorized_access()
+                raise AppException.unauthorized_access()
         return True
 
     def activate_user(self, user):
@@ -64,9 +64,9 @@ class UserOperations:
     def authenticate_user(self, form_data):
         user = self.get_user_by_email(email=form_data.username)
         if not user:
-            raise Exception.forbidden_access()
+            raise AppException.forbidden_access()
         if not self.verify_password(form_data.password, user.password_hash):
-            raise Exception.forbidden_access()
+            raise AppException.forbidden_access()
         return OAuth2.get_access_token(user)
 
     def verify_password(self, password_plain, password_hash):

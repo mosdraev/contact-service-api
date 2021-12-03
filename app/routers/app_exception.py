@@ -25,3 +25,10 @@ class AppException:
             status_code=status.HTTP_404_NOT_FOUND,
             detail=message
         )
+
+    @classmethod
+    def bad_request(cls, message):
+        return HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=message
+        )

@@ -1,4 +1,5 @@
 from ...models.contact import Contact
+from sqlalchemy.exc import IntegrityError
 
 
 class ContactOperations:
@@ -17,11 +18,14 @@ class ContactOperations:
         data.owner_id = owner_id
         new_contact = Contact(**data.dict())
 
-        self.db.add(new_contact)
-        self.db.commit()
-        self.db.refresh(new_contact)
+        try:
+            self.db.add(new_contact)
+            self.db.commit()
+            self.db.refresh(new_contact)
 
-        return new_contact
+            return new_contact
+        except IntegrityError as e:
+            return False
 
     def update_contact(self, data, contact_id, owner_id):
         find_contact = self.db.query(Contact).filter(Contact.id == contact_id, Contact.owner_id == owner_id)

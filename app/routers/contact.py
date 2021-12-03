@@ -42,6 +42,9 @@ def add_contact(data: ContactForm, database: Session = Depends(db),
     operation = ContactOperations(database)
     new_contact = operation.create_contact(data, current_user.id)
 
+    if new_contact is False:
+        raise AppException.bad_request("Contact already exists.")
+
     return new_contact
 
 
